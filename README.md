@@ -1,1 +1,1 @@
-# landing
+# https://morozmary.github.io/landing/
