@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мария Мороз - Дизайнер интерьеров</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2d2d2d;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+      header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 1rem 0;
+    transition: padding 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+header.scrolled {
+    padding: 0.3rem 0;
+}
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .profile-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .profile-info h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d2d2d;
+            margin: 0;
+        }
+        
+        .profile-info p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #2d2d2d;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        header.scrolled .profile-photo {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+header.scrolled .profile-info h2 {
+    font-size: 1rem;
+}
+
+header.scrolled .profile-info p {
+    font-size: 0.8rem;
+}
+        
+        .nav-links a:hover {
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+             padding-top: 120px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .hero-text {
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: slideInUp 1s ease-out;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-contacts {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            animation: slideInUp 1s ease-out 0.6s both;
+        }
+        
+        .hero-contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s ease;
+            font-size: 1rem;
+        }
+        
+        .hero-contact-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-contact-link.telegram:hover {
+            background: rgba(0, 136, 204, 0.4);
+            border-color: rgba(0, 136, 204, 0.6);
+        }
+        
+        .hero-contact-link.instagram:hover {
+            background: linear-gradient(45deg, rgba(225, 48, 108, 0.4), rgba(255, 204, 0, 0.4));
+            border-color: rgba(225, 48, 108, 0.6);
+        }
+        
+        .hero-contact-link.behance:hover {
+            background: rgba(0, 123, 255, 0.4);
+            border-color: rgba(0, 123, 255, 0.6);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s ease;
+            animation: slideInUp 1s ease-out 0.9s both;
+            margin-top: 2rem;
+        }
+        
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .portfolio-section {
+            background: white;
+            padding: 5rem 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .portfolio-item {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .portfolio-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="portfolio-pattern" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="20" height="20" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.2)"/></pattern></defs><rect width="100" height="100" fill="url(%23portfolio-pattern)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .portfolio-content {
+            padding: 2rem;
+        }
+        
+        .portfolio-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #2d2d2d;
+        }
+        
+        .portfolio-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .portfolio-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .portfolio-tag {
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            color: #667eea;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            color: #667eea;
+        }
+        
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        
+        .modal-image-real {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.modal-image-real:hover {
+    transform: scale(1.05);
+}
+        
+        
+        
+        footer {
+            background: #1a1a1a;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .mobile-menu {
+            display: none;
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1001;
+        }
+        
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+            
+            .header-profile {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .profile-photo {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .profile-info h2 {
+                font-size: 1rem;
+            }
+            
+            .profile-info p {
+                font-size: 0.8rem;
+            }
+            
+            .hero-contacts {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .hero-contact-link {
+                width: 80%;
+                justify-content: center;
+                max-width: 300px;
+            }
+            
+            .hero {
+    padding-top: 160px;
+}
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .portfolio-item {
+                max-width: 100%;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 2% auto;
+                padding: 1.5rem;
+            }
+            
+            .modal-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .hero-contact-link {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .portfolio-image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+    
+    <header>
+    <style>
+    .profile-photo {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .profile-photo {
+        width: 100px;
+        height: 100px;
+    }
+    @media (max-width: 480px) {
+    .profile-photo {
+        width: 80px;
+        height: 80px;
+    }
+}
+    </style>
+        <nav class="container">
+            <div class="header-profile">
+                <div class="profile-photo">
+                    <img src="images/maria-photo.jpg" alt="Мария Мороз">
+                </div>
+                <div class="profile-info">
+                    <h2>Мария Мороз</h2>
+                    <p>Дизайнер интерьеров</p>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#portfolio">Портфолио</a></li>
+            </ul>
+            <button class="mobile-menu">☰</button>
+        </nav>
+    </header>
+
+    <section class="hero container" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Дизайн интерьеров</h1>
+                <p>Создаю пространства, которые вдохновляют</p>
+            </div>
+            
+            <div class="hero-contacts">
+                <a href="https://t.me/mashapm6" class="hero-contact-link telegram" target="_blank">
+                    <span style="font-size: 1.5rem;">💬</span>
+                    Telegram
+                </a>
+                
+                <a href="https://www.instagram.com/mashapm6/?hl=ru#" class="hero-contact-link instagram" target="_blank">
+                    <span style="font-size: 1.5rem;">📸</span>
+                    Instagram
+                </a>
+                
+                <a href="https://www.behance.net/3d11d5a1" class="hero-contact-link behance" target="_blank">
+                    <span style="font-size: 1.5rem;">🎨</span>
+                    Behance
+                </a>
+            </div>
+            
+            <a href="#portfolio" class="cta-button">Посмотреть работы</a>
+        </div>
+    </section>
+
+    <section class="portfolio-section" id="portfolio">
+        <div class="container">
+            <h2 class="section-title">Портфолио</h2>
+            
+            <div class="portfolio-grid">
+                <div class="portfolio-item" onclick="openModal('modal1')">
+                    <div class="portfolio-image">
+                        <span>📸 Современная квартира</span>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Современная квартира</h3>
+                        <p class="portfolio-description">Стильный дизайн 2-комнатной квартиры в современном стиле с элементами лофта. Площадь 65 м²</p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Современный</span>
+                            <span class="portfolio-tag">Лофт</span>
+                            <span class="portfolio-tag">65 м²</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" onclick="openModal('modal2')">
+                    <div class="portfolio-image">
+                        <img src="images/house-main.png" alt="Уютный дом" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Уютный дом</h3>
+                        <p class="portfolio-description">Загородный дом в скандинавском стиле с натуральными материалами и светлыми тонами. Площадь 120 м²</p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Скандинавский</span>
+                            <span class="portfolio-tag">Дом</span>
+                            <span class="portfolio-tag">120 м²</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" onclick="openModal('modal3')">
+                    <div class="portfolio-image">
+                        <span>📸 Классическая спальня</span>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Классическая спальня</h3>
+                        <p class="portfolio-description">Элегантная спальня в классическом стиле с роскошными материалами и теплой цветовой гаммой</p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Классика</span>
+                            <span class="portfolio-tag">Спальня</span>
+                            <span class="portfolio-tag">Элегантность</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" onclick="openModal('modal4')">
+                    <div class="portfolio-image">
+                        <span>📸 Минималистичная кухня</span>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Минималистичная кухня</h3>
+                        <p class="portfolio-description">Функциональная кухня в стиле минимализм с акцентом на практичность и чистые линии</p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Минимализм</span>
+                            <span class="portfolio-tag">Кухня</span>
+                            <span class="portfolio-tag">Функциональность</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" onclick="openModal('modal5')">
+                    <div class="portfolio-image">
+                        <span>📸 Детская комната</span>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Детская комната</h3>
+                        <p class="portfolio-description">Яркая и безопасная детская комната с зонированием для игр, учебы и отдыха</p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Детская</span>
+                            <span class="portfolio-tag">Зонирование</span>
+                            <span class="portfolio-tag">Безопасность</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" onclick="openModal('modal6')">
+                    <div class="portfolio-image">
+                        <span>📸 Офисное пространство</span>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Офисное пространство</h3>
+                        <p class="portfolio-description">Современный офис с эргономичной планировкой и комфортной рабочей атмосферой</p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Офис</span>
+                            <span class="portfolio-tag">Эргономика</span>
+                            <span class="portfolio-tag">Современность</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальные окна для портфолио -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal1')">&times;</span>
+            <h3>Современная квартира</h3>
+            <div class="modal-gallery">
+                <img src="images/house-main.png" alt="Фото 1" class="modal-image-real">
+<img src="images/house-2.png" alt="Фото 2" class="modal-image-real">
+<img src="images/house-3.png" alt="Фото 3" class="modal-image-real">
+<img src="images/house-4.png" alt="Фото 4" class="modal-image-real">
+            </div>
+            <p>Стильный дизайн 2-комнатной квартиры в современном стиле с элементами лофта. Проект включает в себя полную перепланировку пространства, создание открытой кухни-гостиной, оптимизацию хранения и использование современных материалов.</p>
+            <p><strong>Площадь:</strong> 65 м²</p>
+            <p><strong>Срок реализации:</strong> 3 месяца</p>
+            <p><strong>Особенности:</strong> Открытая планировка, панорамные окна, встроенная мебель</p>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal2')">&times;</span>
+            <h3>Уютный дом</h3>
+            <div class="modal-gallery">
+                <img src="images/house-main.png" alt="Фото 1" class="modal-image-real">
+<img src="images/house-2.png" alt="Фото 2" class="modal-image-real">
+<img src="images/house-3.png" alt="Фото 3" class="modal-image-real">
+<img src="images/house-4.png" alt="Фото 4" class="modal-image-real">
+            </div>
+            <p>Загородный дом в скандинавском стиле с натуральными материалами и светлыми тонами. Акцент на функциональность, уют и связь с природой.</p>
+            <p><strong>Площадь:</strong> 120 м²</p>
+            <p><strong>Срок реализации:</strong> 4 месяца</p>
+            <p><strong>Особенности:</strong> Натуральные материалы, большие окна, камин</p>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal3')">&times;</span>
+            <h3>Классическая спальня</h3>
+            <div class="modal-gallery">
+                <div class="modal-image">Фото 1</div>
+                <div class="modal-image">Фото 2</div>
+                <div class="modal-image">Фото 3</div>
+                <div class="modal-image">Фото 4</div>
+            </div>
+            <p>Элегантная спальня в классическом стиле с роскошными материалами и теплой цветовой гаммой. Создана атмосфера уюта и роскоши.</p>
+            <p><strong>Особенности:</strong> Классическая мебель, текстиль премиум-класса, авторские элементы декора</p>
+        </div>
+    </div>
+
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal4')">&times;</span>
+            <h3>Минималистичная кухня</h3>
+            <div class="modal-gallery">
+                <div class="modal-image">Фото 1</div>
+                <div class="modal-image">Фото 2</div>
+                <div class="modal-image">Фото 3</div>
+                <div class="modal-image">Фото 4</div>
+            </div>
+            <p>Функциональная кухня в стиле минимализм с акцентом на практичность и чистые линии. Максимум функциональности при минимуме декора.</p>
+            <p><strong>Особенности:</strong> Скрытые системы хранения, современная техника, лаконичный дизайн</p>
+        </div>
+    </div>
+
+    <div id="modal5" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal5')">&times;</span>
+            <h3>Детская комната</h3>
+            <div class="modal-gallery">
+                <div class="modal-image">Фото 1</div>
+                <div class="modal-image">Фото 2</div>
+                <div class="modal-image">Фото 3</div>
+                <div class="modal-image">Фото 4</div>
+            </div>
+            <p>Яркая и безопасная детская комната с четким зонированием для игр, учебы и отдыха. Использованы экологически чистые материалы.</p>
+            <p><strong>Особенности:</strong> Безопасные материалы, функциональные зоны, яркие акценты</p>
+        </div>
+    </div>
+
+    <div id="modal6" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal6')">&times;</span>
+            <h3>Офисное пространство</h3>
+            <div class="modal-gallery">
+                <div class="modal-image">Фото 1</div>
+                <div class="modal-image">Фото 2</div>
+                <div class="modal-image">Фото 3</div>
+                <div class="modal-image">Фото 4</div>
+            </div>
+            <p>Современный офис с эргономичной планировкой и комфортной рабочей атмосферой. Создано пространство, способствующее продуктивной работе.</p>
+            <p><strong>Особенности:</strong> Эргономичная мебель, зонирование пространства, современные технологии</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Мария Мороз. Дизайн интерьеров. Все права защищены.</p>
+            <p>Создаю уникальные пространства для комфортной жизни</p>
+        </div>
+    </footer>
+
+    <script>
+        // Прогресс скролла
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollTop / scrollHeight) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        });
+
+        // Плавная прокрутка к секциям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Функции для модальных окон
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Предотвращаем прокрутку фона
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto'; // Возвращаем прокрутку
+        }
+
+        // Закрытие модального окна при клике вне его
+        window.addEventListener('click', function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Закрытие модального окна по ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+        });
+
+        // Мобильное меню
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks.style.display === 'none' || navLinks.style.display === '') {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.right = '0';
+                navLinks.style.background = 'rgba(255, 255, 255, 0.95)';
+                navLinks.style.backdropFilter = 'blur(20px)';
+                navLinks.style.padding = '1rem';
+                navLinks.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
+                navLinks.style.zIndex = '1000';
+            } else {
+                navLinks.style.display = 'none';
+            }
+        });
+
+        // Анимация появления элементов при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Применяем анимацию к элементам портфолио
+        document.addEventListener('DOMContentLoaded', function() {
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            portfolioItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(50px)';
+                item.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                observer.observe(item);
+            });
+        });
+
+        // Улучшенная адаптивность для мобильных устройств
+        function handleResize() {
+            const width = window.innerWidth;
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (width > 768) {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'row';
+                navLinks.style.position = 'static';
+                navLinks.style.background = 'none';
+                navLinks.style.backdropFilter = 'none';
+                navLinks.style.padding = '0';
+                navLinks.style.boxShadow = 'none';
+            } else {
+                navLinks.style.display = 'none';
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        document.addEventListener('DOMContentLoaded', handleResize);
+
+        // Параллакс эффект для героя
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const heroContent = document.querySelector('.hero-content');
+            
+            if (hero && heroContent) {
+                heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Добавляем пульсацию к кнопкам при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.cta-button, .hero-contact-link');
+            buttons.forEach((button, index) => {
+                setTimeout(() => {
+                    button.style.animation = 'pulse 2s infinite';
+                }, index * 200);
+            });
+        });
+
+        // Добавляем CSS для пульсации
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4); }
+                70% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Добавляем дополнительные стили для улучшения мобильной адаптивности
+        const mobileStyles = document.createElement('style');
+        mobileStyles.textContent = `
+            @media (max-width: 480px) {
+                .hero-text {
+                    margin-bottom: 2rem;
+                }
+                
+                .hero h1 {
+                    font-size: 2rem;
+                    line-height: 1.2;
+                }
+                
+                .hero p {
+                    font-size: 1rem;
+                    margin-bottom: 1.5rem;
+                }
+                
+                .portfolio-content {
+                    padding: 1.5rem;
+                }
+                
+                .portfolio-title {
+                    font-size: 1.2rem;
+                }
+                
+                .portfolio-description {
+                    font-size: 0.9rem;
+                }
+                
+                .modal-content {
+                    padding: 1rem;
+                    max-height: 90vh;
+                }
+                
+                .modal-close {
+                    top: 0.5rem;
+                    right: 1rem;
+                    font-size: 1.5rem;
+                }
+                
+                .section-title {
+                    font-size: 2rem;
+                    margin-bottom: 2rem;
+                }
+                
+                .portfolio-section {
+                    padding: 3rem 0;
+                }
+                
+                .nav-links {
+                    gap: 1rem;
+                }
+                
+                .nav-links a {
+                    padding: 0.5rem 0;
+                    text-align: center;
+                }
+            }
+            
+            @media (max-width: 320px) {
+                .container {
+                    padding: 0 10px;
+                }
+                
+                .hero h1 {
+                    font-size: 1.8rem;
+                }
+                
+                .hero-contact-link {
+                    padding: 0.7rem 1.2rem;
+                    font-size: 0.85rem;
+                }
+                
+                .portfolio-image {
+                    height: 200px;
+                    font-size: 1rem;
+                }
+            }
+        `;
+        document.head.appendChild(mobileStyles);
+    </script>
+    <script>
+window.addEventListener('scroll', function() {
+    const header = document.querySelector('header');
+    
+    if (window.scrollY > 50) { // когда прокрутили больше 50px
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+});
+</script>
+</body>
+</html>
