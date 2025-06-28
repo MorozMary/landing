@@ -260,6 +260,72 @@ header.scrolled .profile-info p {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
+
+.about-section {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 5rem 0;
+    position: relative;
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.about-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: #2d2d2d;
+}
+
+.about-content h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem 0;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.about-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+}
+
+.about-content li {
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    color: #444;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.about-content li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: bold;
+}
+
+.about-motto {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #667eea;
+    margin-top: 2rem;
+    font-weight: 600;
+}
+
+
 .portfolio-section {
     background: white;
     padding: 5rem 0;
