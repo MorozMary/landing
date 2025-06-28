@@ -21,7 +21,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -280,7 +280,7 @@ header.scrolled .profile-info p {
         
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: 1fr;
             gap: 2rem;
             margin-top: 3rem;
         }
@@ -300,30 +300,44 @@ header.scrolled .profile-info p {
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
         }
         
-        .portfolio-image {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 600;
-            position: relative;
-            overflow: hidden;
-        }
         
-        .portfolio-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="portfolio-pattern" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="20" height="20" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.2)"/></pattern></defs><rect width="100" height="100" fill="url(%23portfolio-pattern)"/></svg>');
-            opacity: 0.3;
-        }
+        .portfolio-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-image::after {
+    background: rgba(0, 0, 0, 0.3);
+}
+        
+        
+                
+        .portfolio-image {
+    width: 100%;
+    height: 800px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px 20px 0 0;
+}
+
+.portfolio-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.portfolio-item:hover .portfolio-image img {
+    transform: scale(1.05);
+}
+        
+        
         
         .portfolio-content {
             padding: 2rem;
@@ -432,7 +446,7 @@ header.scrolled .profile-info p {
         .modal-image-real {
     width: 100%;
     height: 200px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 10px;
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -567,6 +581,80 @@ header.scrolled .profile-info p {
                 height: 250px;
             }
         }
+        .portfolio-image img,
+.modal-image-real {
+    transition: opacity 0.3s ease;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Прелоадер для изображений */
+.image-placeholder {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    position: relative;
+}
+
+.image-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Blur-to-focus эффект */
+.portfolio-image img[data-lazy] {
+    filter: blur(5px);
+    transition: filter 0.3s;
+}
+
+.portfolio-image img[data-loaded] {
+    filter: blur(0);
+}
+
+/* Прогрессивная загрузка */
+.progressive-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.progressive-image-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(10px);
+    transition: opacity 0.3s;
+}
+
+.progressive-image-main {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.progressive-image-main.loaded {
+    opacity: 1;
+}
+
+.progressive-image-main.loaded + .progressive-image-thumb {
+    opacity: 0;
+}
     </style>
 </head>
 <body>
@@ -582,6 +670,69 @@ header.scrolled .profile-info p {
     overflow: hidden;
     border-radius: 50%;
 }
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.footer-info h3 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.contact-form h3 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.contact-form button {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.3s ease;
+}
+
+.contact-form button:hover {
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
 
 .profile-photo img {
     width: 100%;
@@ -604,7 +755,7 @@ header.scrolled .profile-info p {
         <nav class="container">
             <div class="header-profile">
                 <div class="profile-photo">
-                    <img src="images/maria-photo.jpg" alt="Мария Мороз">
+                  <img src="images/maria-photo.jpg" alt="Мария Мороз" loading="eager">
                 </div>
                 <div class="profile-info">
                     <h2>Мария Мороз</h2>
@@ -768,7 +919,7 @@ header.scrolled .profile-info p {
             <span class="modal-close" onclick="closeModal('modal2')">&times;</span>
             <h3>Уютный дом</h3>
             <div class="modal-gallery">
-                <img src="images/house-main.png" alt="Фото 1" class="modal-image-real">
+                <img src="images/house-main.png" alt="Фото 1" class="modal-image-real" loading="lazy">
 <img src="images/house-2.png" alt="Фото 2" class="modal-image-real">
 <img src="images/house-3.png" alt="Фото 3" class="modal-image-real">
 <img src="images/house-4.png" alt="Фото 4" class="modal-image-real">
@@ -841,11 +992,30 @@ header.scrolled .profile-info p {
     </div>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2025 Мария Мороз. Дизайн интерьеров. Все права защищены.</p>
-            <p>Создаю уникальные пространства для комфортной жизни</p>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-info">
+                <h3>Мария Мороз</h3>
+                <p>Дизайнер интерьеров</p>
+                <p>Создаю уникальные пространства для комфортной жизни</p>
+            </div>
+            
+            <div class="contact-form">
+                <h3>Написать мне</h3>
+                <form id="contactForm">
+                    <input type="text" placeholder="Ваше имя" required>
+                    <input type="email" placeholder="Email" required>
+                    <textarea placeholder="Сообщение" rows="4" required></textarea>
+                    <button type="submit">Отправить</button>
+                </form>
+            </div>
         </div>
-    </footer>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Мария Мороз. Все права защищены.</p>
+        </div>
+    </div>
+</footer>
 
     <script>
         // Прогресс скролла
@@ -1085,6 +1255,20 @@ header.scrolled .profile-info p {
             }
         `;
         document.head.appendChild(mobileStyles);
+        
+        
+        
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = e.target[0].value;
+    const email = e.target[1].value;
+    const message = e.target[2].value;
+    
+    window.location.href = `pasha_viarenich@mail.ru?subject=Заявка от ${name}&body=От: ${email}%0D%0A%0D%0A${message}`;
+});
+
+
+
     </script>
     <script>
 window.addEventListener('scroll', function() {
@@ -1096,6 +1280,151 @@ window.addEventListener('scroll', function() {
         header.classList.remove('scrolled');
     }
 });
+
+
+
+// Прогрессивная загрузка изображений
+function loadImageProgressively() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                const src = img.getAttribute('data-src');
+                
+                // Создаем новое изображение для предзагрузки
+                const newImg = new Image();
+                newImg.onload = function() {
+                    img.src = src;
+                    img.classList.add('loaded');
+                    img.removeAttribute('data-src');
+                };
+                newImg.src = src;
+                
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+}
+
+// Сжатие изображений на лету (если браузер поддерживает)
+function compressImage(file, quality = 0.8) {
+    return new Promise((resolve) => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        
+        img.onload = function() {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            
+            canvas.toBlob(resolve, 'image/jpeg', quality);
+        };
+        
+        img.src = URL.createObjectURL(file);
+    });
+}
+
+// Функция для создания WebP версий
+function createWebPVersion(imagePath) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            
+            // Попытаемся создать WebP
+            canvas.toBlob((blob) => {
+                if (blob) {
+                    resolve(URL.createObjectURL(blob));
+                } else {
+                    reject('WebP не поддерживается');
+                }
+            }, 'image/webp', 0.8);
+        };
+        
+        img.onerror = reject;
+        img.src = imagePath;
+    });
+}
+
+// Ленивая загрузка с улучшенной производительностью
+function enhancedLazyLoading() {
+    const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    
+                    // Добавляем placeholder во время загрузки
+                    if (!img.complete) {
+                        img.style.backgroundColor = '#f0f0f0';
+                        img.style.backgroundImage = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                        
+                        img.onload = function() {
+                            img.style.backgroundColor = 'transparent';
+                            img.style.backgroundImage = 'none';
+                            img.classList.add('loaded');
+                        };
+                    }
+                    
+                    imageObserver.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px'
+        });
+        
+        lazyImages.forEach(img => imageObserver.observe(img));
+    }
+}
+
+// Предзагрузка критически важных изображений
+function preloadCriticalImages() {
+    const criticalImages = [
+        'images/maria-photo.jpg',
+        'images/house-main.png'
+    ];
+    
+    criticalImages.forEach(src => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.href = src;
+        link.as = 'image';
+        document.head.appendChild(link);
+    });
+}
+
+// Запускаем все функции при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    preloadCriticalImages();
+    loadImageProgressively();
+    enhancedLazyLoading();
+});
+
+// Добавляем обработчик ошибок для изображений
+document.addEventListener('error', function(e) {
+    if (e.target.tagName === 'IMG') {
+        e.target.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+        e.target.style.color = 'white';
+        e.target.style.display = 'flex';
+        e.target.style.alignItems = 'center';
+        e.target.style.justifyContent = 'center';
+        e.target.innerHTML = '📸 Изображение не загружено';
+    }
+}, true);
 </script>
 </body>
 </html>
