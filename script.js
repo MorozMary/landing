@@ -20,40 +20,293 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Функции для модальных окон
-function openModal(modalId) {
-    document.getElementById(modalId).style.display = 'block';
-    document.body.style.overflow = 'hidden'; // Предотвращаем прокрутку фона
+// Состояние модальных окон
+let currentModal = null;
+let currentSlide = 0;
+let totalSlides = 0;
+let isModalOpen = false;
+
+// Данные для модальных окон
+const modalData = {
+    modal1: {
+        title: "Современная квартира",
+        images: [
+            "images/house-main.png",
+            "images/house-2.png", 
+            "images/house-3.png",
+            "images/house-4.png"
+        ],
+        description: "Стильный дизайн 2-комнатной квартиры в современном стиле с элементами лофта. Проект включает в себя полную перепланировку пространства, создание открытой кухни-гостиной, оптимизацию хранения и использование современных материалов.",
+        details: {
+            area: "65 м²",
+            duration: "3 месяца", 
+            features: "Открытая планировка, панорамные окна, встроенная мебель"
+        }
+    },
+    modal2: {
+        title: "Уютный дом",
+        images: [
+            "images/house-main.png",
+            "images/house-2.png",
+            "images/house-3.png", 
+            "images/house-4.png"
+        ],
+        description: "Загородный дом в скандинавском стиле с натуральными материалами и светлыми тонами. Акцент на функциональность, уют и связь с природой.",
+        details: {
+            area: "120 м²",
+            duration: "4 месяца",
+            features: "Натуральные материалы, большие окна, камин"
+        }
+    },
+    modal3: {
+        title: "Классическая спальня",
+        images: [
+            "images/placeholder1.jpg",
+            "images/placeholder2.jpg",
+            "images/placeholder3.jpg",
+            "images/placeholder4.jpg"
+        ],
+        description: "Элегантная спальня в классическом стиле с роскошными материалами и теплой цветовой гаммой. Создана атмосфера уюта и роскоши.",
+        details: {
+            features: "Классическая мебель, текстиль премиум-класса, авторские элементы декора"
+        }
+    },
+    modal4: {
+        title: "Минималистичная кухня", 
+        images: [
+            "images/placeholder1.jpg",
+            "images/placeholder2.jpg",
+            "images/placeholder3.jpg",
+            "images/placeholder4.jpg"
+        ],
+        description: "Функциональная кухня в стиле минимализм с акцентом на практичность и чистые линии. Максимум функциональности при минимуме декора.",
+        details: {
+            features: "Скрытые системы хранения, современная техника, лаконичный дизайн"
+        }
+    },
+    modal5: {
+        title: "Детская комната",
+        images: [
+            "images/placeholder1.jpg",
+            "images/placeholder2.jpg", 
+            "images/placeholder3.jpg",
+            "images/placeholder4.jpg"
+        ],
+        description: "Яркая и безопасная детская комната с четким зонированием для игр, учебы и отдыха. Использованы экологически чистые материалы.",
+        details: {
+            features: "Безопасные материалы, функциональные зоны, яркие акценты"
+        }
+    },
+    modal6: {
+        title: "Офисное пространство",
+        images: [
+            "images/placeholder1.jpg",
+            "images/placeholder2.jpg",
+            "images/placeholder3.jpg", 
+            "images/placeholder4.jpg"
+        ],
+        description: "Современный офис с эргономичной планировкой и комфортной рабочей атмосферой. Создано пространство, способствующее продуктивной работе.",
+        details: {
+            features: "Эргономичная мебель, зонирование пространства, современные технологии"
+        }
+    }
+};
+
+// Функция создания модального окна
+function createModal(modalId) {
+    const data = modalData[modalId];
+    if (!data) return;
+
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('${modalId}')">&times;</span>
+            
+            <div class="modal-header">
+                <h3 class="modal-title">${data.title}</h3>
+            </div>
+            
+            <div class="modal-gallery">
+                <div class="modal-slider" id="slider-${modalId}">
+                    ${data.images.map((img, index) => `
+                        <div class="modal-slide ${index === 0 ? 'active' : ''}">
+                            <img src="${img}" alt="${data.title} - Фото ${index + 1}" 
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                 onload="this.nextElementSibling.style.display='none';">
+                            <div class="modal-image-placeholder" style="display: none;">
+                                <span>📸</span>
+                                <p>Фото ${index + 1}</p>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div class="modal-nav prev" onclick="changeSlide(-1)">‹</div>
+                <div class="modal-nav next" onclick="changeSlide(1)">›</div>
+                
+                <div class="modal-indicators">
+                    ${data.images.map((_, index) => `
+                        <div class="modal-indicator ${index === 0 ? 'active' : ''}" 
+                             onclick="goToSlide(${index})"></div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="modal-info">
+                <p class="modal-description">${data.description}</p>
+                <div class="modal-details">
+                    ${data.details.area ? `<div><strong>Площадь:</strong> ${data.details.area}</div>` : ''}
+                    ${data.details.duration ? `<div><strong>Срок реализации:</strong> ${data.details.duration}</div>` : ''}
+                    ${data.details.features ? `<div><strong>Особенности:</strong> ${data.details.features}</div>` : ''}
+                </div>
+            </div>
+        </div>
+    `;
 }
 
-function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
-    document.body.style.overflow = 'auto'; // Возвращаем прокрутку
+// Функция открытия модального окна
+function openModal(modalId) {
+    createModal(modalId);
+    
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+    
+    currentModal = modalId;
+    currentSlide = 0;
+    totalSlides = modalData[modalId].images.length;
+    isModalOpen = true;
+    
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    
+    // Добавляем анимацию появления
+    setTimeout(() => {
+        modal.classList.add('modal-open');
+    }, 10);
+    
+    updateSlider();
 }
+
+// Функция закрытия модального окна
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+    
+    modal.classList.remove('modal-open');
+    
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        isModalOpen = false;
+        currentModal = null;
+    }, 300);
+}
+
+// Функция смены слайда
+function changeSlide(direction) {
+    if (!isModalOpen || !currentModal) return;
+    
+    currentSlide += direction;
+    
+    if (currentSlide >= totalSlides) {
+        currentSlide = 0;
+    } else if (currentSlide < 0) {
+        currentSlide = totalSlides - 1;
+    }
+    
+    updateSlider();
+}
+
+// Функция перехода к конкретному слайду
+function goToSlide(index) {
+    if (!isModalOpen || !currentModal) return;
+    
+    currentSlide = index;
+    updateSlider();
+}
+
+// Функция обновления слайдера
+function updateSlider() {
+    if (!currentModal) return;
+    
+    const slider = document.getElementById(`slider-${currentModal}`);
+    const indicators = document.querySelectorAll(`#${currentModal} .modal-indicator`);
+    const slides = document.querySelectorAll(`#${currentModal} .modal-slide`);
+    
+    if (!slider) return;
+    
+    // Обновляем позицию слайдера
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    
+    // Обновляем индикаторы
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentSlide);
+    });
+    
+    // Обновляем активный слайд
+    slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentSlide);
+    });
+}
+
+// Обработка клавиш
+document.addEventListener('keydown', function(event) {
+    if (!isModalOpen) return;
+    
+    switch(event.key) {
+        case 'Escape':
+            closeModal(currentModal);
+            break;
+        case 'ArrowLeft':
+            changeSlide(-1);
+            break;
+        case 'ArrowRight':
+            changeSlide(1);
+            break;
+    }
+});
 
 // Закрытие модального окна при клике вне его
 window.addEventListener('click', function(event) {
+    if (!isModalOpen) return;
+    
     const modals = document.querySelectorAll('.modal');
     modals.forEach(modal => {
         if (event.target === modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
+            closeModal(modal.id);
         }
     });
 });
 
-// Закрытие модального окна по ESC
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        const modals = document.querySelectorAll('.modal');
-        modals.forEach(modal => {
-            if (modal.style.display === 'block') {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-    }
+// Поддержка свайпов для мобильных устройств
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', function(event) {
+    if (!isModalOpen) return;
+    touchStartX = event.changedTouches[0].screenX;
 });
+
+document.addEventListener('touchend', function(event) {
+    if (!isModalOpen) return;
+    touchEndX = event.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    
+    if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+            changeSlide(1); // Свайп влево - следующий слайд
+        } else {
+            changeSlide(-1); // Свайп вправо - предыдущий слайд
+        }
+    }
+}
 
 // Мобильное меню
 document.querySelector('.mobile-menu').addEventListener('click', function() {
@@ -133,269 +386,236 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Добавляем пульсацию к кнопкам при загрузке
-document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll('.cta-button, .hero-contact-link');
-    buttons.forEach((button, index) => {
-        setTimeout(() => {
-            button.style.animation = 'pulse 2s infinite';
-        }, index * 200);
-    });
-});
-
-// Добавляем CSS для пульсации
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes pulse {
-        0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4); }
-        70% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
-    }
-`;
-document.head.appendChild(style);
-
-// Добавляем дополнительные стили для улучшения мобильной адаптивности
-const mobileStyles = document.createElement('style');
-mobileStyles.textContent = `
-    @media (max-width: 480px) {
-        .hero-text {
-            margin-bottom: 2rem;
-        }
-        
-        .hero h1 {
-            font-size: 2rem;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .portfolio-content {
-            padding: 1.5rem;
-        }
-        
-        .portfolio-title {
-            font-size: 1.2rem;
-        }
-        
-        .portfolio-description {
-            font-size: 0.9rem;
-        }
-        
-        .modal-content {
-            padding: 1rem;
-            max-height: 90vh;
-        }
-        
-        .modal-close {
-            top: 0.5rem;
-            right: 1rem;
-            font-size: 1.5rem;
-        }
-        
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .portfolio-section {
-            padding: 3rem 0;
-        }
-        
-        .nav-links {
-            gap: 1rem;
-        }
-        
-        .nav-links a {
-            padding: 0.5rem 0;
-            text-align: center;
-        }
-    }
-    
-    @media (max-width: 320px) {
-        .container {
-            padding: 0 10px;
-        }
-        
-        .hero h1 {
-            font-size: 1.8rem;
-        }
-        
-        .hero-contact-link {
-            padding: 0.7rem 1.2rem;
-            font-size: 0.85rem;
-        }
-        
-        .portfolio-image {
-            height: 200px;
-            font-size: 1rem;
-        }
-    }
-`;
-document.head.appendChild(mobileStyles);
-
-// Обработчик формы контакта
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = e.target[0].value;
-    const email = e.target[1].value;
-    const message = e.target[2].value;
-    
-    window.location.href = `pasha_viarenich@mail.ru?subject=Заявка от ${name}&body=От: ${email}%0D%0A%0D%0A${message}`;
-});
-
 // Скролл эффект для хедера
 window.addEventListener('scroll', function() {
     const header = document.querySelector('header');
     
-    if (window.scrollY > 50) { // когда прокрутили больше 50px
+    if (window.scrollY > 50) {
         header.classList.add('scrolled');
     } else {
         header.classList.remove('scrolled');
     }
 });
 
-// Прогрессивная загрузка изображений
-function loadImageProgressively() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                const src = img.getAttribute('data-src');
-                
-                // Создаем новое изображение для предзагрузки
-                const newImg = new Image();
-                newImg.onload = function() {
-                    img.src = src;
-                    img.classList.add('loaded');
-                    img.removeAttribute('data-src');
-                };
-                newImg.src = src;
-                
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-    
-    images.forEach(img => imageObserver.observe(img));
-}
-
-// Сжатие изображений на лету (если браузер поддерживает)
-function compressImage(file, quality = 0.8) {
-    return new Promise((resolve) => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        const img = new Image();
-        
-        img.onload = function() {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-            
-            canvas.toBlob(resolve, 'image/jpeg', quality);
-        };
-        
-        img.src = URL.createObjectURL(file);
-    });
-}
-
-// Функция для создания WebP версий
-function createWebPVersion(imagePath) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        
-        img.onload = function() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-            
-            // Попытаемся создать WebP
-            canvas.toBlob((blob) => {
-                if (blob) {
-                    resolve(URL.createObjectURL(blob));
-                } else {
-                    reject('WebP не поддерживается');
-                }
-            }, 'image/webp', 0.8);
-        };
-        
-        img.onerror = reject;
-        img.src = imagePath;
-    });
-}
-
-// Ленивая загрузка с улучшенной производительностью
-function enhancedLazyLoading() {
-    const lazyImages = document.querySelectorAll('img[loading="lazy"]');
-    
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    
-                    // Добавляем placeholder во время загрузки
-                    if (!img.complete) {
-                        img.style.backgroundColor = '#f0f0f0';
-                        img.style.backgroundImage = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-                        
-                        img.onload = function() {
-                            img.style.backgroundColor = 'transparent';
-                            img.style.backgroundImage = 'none';
-                            img.classList.add('loaded');
-                        };
-                    }
-                    
-                    imageObserver.unobserve(img);
-                }
-            });
-        }, {
-            rootMargin: '50px'
-        });
-        
-        lazyImages.forEach(img => imageObserver.observe(img));
-    }
-}
-
-// Предзагрузка критически важных изображений
-function preloadCriticalImages() {
-    const criticalImages = [
-        'images/maria-photo.jpg',
-        'images/house-main.png'
-    ];
-    
-    criticalImages.forEach(src => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.href = src;
-        link.as = 'image';
-        document.head.appendChild(link);
-    });
-}
-
-// Запускаем все функции при загрузке страницы
+// Обработчик формы контакта
 document.addEventListener('DOMContentLoaded', function() {
-    preloadCriticalImages();
-    loadImageProgressively();
-    enhancedLazyLoading();
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = e.target[0].value;
+            const email = e.target[1].value;
+            const message = e.target[2].value;
+            
+            window.location.href = `mailto:pasha_viarenich@mail.ru?subject=Заявка от ${name}&body=От: ${email}%0D%0A%0D%0A${message}`;
+        });
+    }
 });
 
-// Добавляем обработчик ошибок для изображений
-document.addEventListener('error', function(e) {
-    if (e.target.tagName === 'IMG') {
-        e.target.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-        e.target.style.color = 'white';
-        e.target.style.display = 'flex';
-        e.target.style.alignItems = 'center';
-        e.target.style.justifyContent = 'center';
-        e.target.innerHTML = '📸 Изображение не загружено';
+// Добавляем дополнительные стили для модальных окон
+const modalStyles = document.createElement('style');
+modalStyles.textContent = `
+    .modal {
+        transition: opacity 0.3s ease;
+        opacity: 0;
     }
-}, true);
+    
+    .modal.modal-open {
+        opacity: 1;
+    }
+    
+    .modal-slider {
+        display: flex;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100%;
+    }
+    
+    .modal-slide {
+        min-width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    
+    .modal-slide img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        transition: opacity 0.3s ease;
+    }
+    
+    .modal-image-placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        gap: 1rem;
+    }
+    
+    .modal-image-placeholder span {
+        font-size: 3rem;
+    }
+    
+    .modal-nav {
+        transition: all 0.3s ease;
+        user-select: none;
+    }
+    
+    .modal-nav:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: #667eea;
+    }
+    
+    .modal-indicators {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0.5rem;
+        z-index: 10;
+    }
+    
+    .modal-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .modal-indicator.active {
+        background: white;
+        transform: scale(1.2);
+    }
+    
+    .modal-indicator:hover {
+        background: rgba(255, 255, 255, 0.7);
+        transform: scale(1.1);
+    }
+    
+    @media (max-width: 768px) {
+        .modal-nav {
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+        }
+        
+        .modal-nav.prev {
+            left: 1rem;
+        }
+        
+        .modal-nav.next {
+            right: 1rem;
+        }
+        
+        .modal-indicators {
+            bottom: 1rem;
+        }
+        
+        .modal-indicator {
+            width: 10px;
+            height: 10px;
+        }
+        
+        .modal-info {
+            padding: 2rem 1rem 1rem;
+        }
+        
+        .modal-description {
+            font-size: 1rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .modal-nav {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+        
+        .modal-nav.prev {
+            left: 0.5rem;
+        }
+        
+        .modal-nav.next {
+            right: 0.5rem;
+        }
+        
+        .modal-close {
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 35px;
+            height: 35px;
+            font-size: 1rem;
+        }
+        
+        .modal-indicators {
+            bottom: 0.5rem;
+        }
+        
+        .modal-indicator {
+            width: 8px;
+            height: 8px;
+        }
+    }
+`;
+document.head.appendChild(modalStyles);
+
+// Предзагрузка изображений для лучшей производительности
+function preloadImages() {
+    Object.values(modalData).forEach(data => {
+        data.images.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+    });
+}
+
+// Запускаем предзагрузку при загрузке страницы
+document.addEventListener('DOMContentLoaded', preloadImages);
+
+// Автоматическое воспроизведение слайдов (опционально)
+let autoplayInterval;
+
+function startAutoplay() {
+    if (!isModalOpen) return;
+    
+    autoplayInterval = setInterval(() => {
+        changeSlide(1);
+    }, 5000);
+}
+
+function stopAutoplay() {
+    if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+        autoplayInterval = null;
+    }
+}
+
+// Запуск автопроигрывания при открытии модального окна (по желанию)
+// Раскомментируйте следующие строки, если хотите автопроигрывание
+/*
+document.addEventListener('click', function(e) {
+    if (e.target.closest('.portfolio-item')) {
+        setTimeout(startAutoplay, 1000);
+    }
+});
+
+document.addEventListener('keydown', function(e) {
+    if (isModalOpen && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+        stopAutoplay();
+    }
+});
+*/
