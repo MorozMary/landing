@@ -29,86 +29,60 @@ let isModalOpen = false;
 // Данные для модальных окон
 const modalData = {
     modal1: {
-        title: "Современная квартира",
         images: [
-            "images/house-main.png",
-            "images/house-2.png", 
-            "images/house-3.png",
-            "images/house-4.png"
-        ],
-        description: "Стильный дизайн 2-комнатной квартиры в современном стиле с элементами лофта. Проект включает в себя полную перепланировку пространства, создание открытой кухни-гостиной, оптимизацию хранения и использование современных материалов.",
-        details: {
-            area: "65 м²",
-            duration: "3 месяца", 
-            features: "Открытая планировка, панорамные окна, встроенная мебель"
-        }
+            "images/1.jpg",
+            "images/2.jpg", 
+            "images/3.jpg",
+            "images/4.jpg",
+            "images/5.jpg",
+            "images/6.jpg", 
+            "images/7.jpg",
+             "images/8.jpg",
+            "images/9.jpg"
+
+        ]
     },
     modal2: {
-        title: "Уютный дом",
         images: [
             "images/house-main.png",
             "images/house-2.png",
             "images/house-3.png", 
             "images/house-4.png"
-        ],
-        description: "Загородный дом в скандинавском стиле с натуральными материалами и светлыми тонами. Акцент на функциональность, уют и связь с природой.",
-        details: {
-            area: "120 м²",
-            duration: "4 месяца",
-            features: "Натуральные материалы, большие окна, камин"
-        }
+        ]
     },
     modal3: {
-        title: "Классическая спальня",
         images: [
-            "images/placeholder1.jpg",
-            "images/placeholder2.jpg",
-            "images/placeholder3.jpg",
-            "images/placeholder4.jpg"
-        ],
-        description: "Элегантная спальня в классическом стиле с роскошными материалами и теплой цветовой гаммой. Создана атмосфера уюта и роскоши.",
-        details: {
-            features: "Классическая мебель, текстиль премиум-класса, авторские элементы декора"
-        }
+            "images/01.png",
+            "images/02.png",
+            "images/03.png",
+            "images/04.jpg",
+            "images/05.jpg"
+
+        ]
     },
     modal4: {
-        title: "Минималистичная кухня", 
         images: [
             "images/placeholder1.jpg",
             "images/placeholder2.jpg",
             "images/placeholder3.jpg",
             "images/placeholder4.jpg"
-        ],
-        description: "Функциональная кухня в стиле минимализм с акцентом на практичность и чистые линии. Максимум функциональности при минимуме декора.",
-        details: {
-            features: "Скрытые системы хранения, современная техника, лаконичный дизайн"
-        }
+        ]
     },
     modal5: {
-        title: "Детская комната",
         images: [
             "images/placeholder1.jpg",
             "images/placeholder2.jpg", 
             "images/placeholder3.jpg",
             "images/placeholder4.jpg"
-        ],
-        description: "Яркая и безопасная детская комната с четким зонированием для игр, учебы и отдыха. Использованы экологически чистые материалы.",
-        details: {
-            features: "Безопасные материалы, функциональные зоны, яркие акценты"
-        }
+        ]
     },
     modal6: {
-        title: "Офисное пространство",
         images: [
             "images/placeholder1.jpg",
             "images/placeholder2.jpg",
             "images/placeholder3.jpg", 
             "images/placeholder4.jpg"
-        ],
-        description: "Современный офис с эргономичной планировкой и комфортной рабочей атмосферой. Создано пространство, способствующее продуктивной работе.",
-        details: {
-            features: "Эргономичная мебель, зонирование пространства, современные технологии"
-        }
+        ]
     }
 };
 
@@ -124,20 +98,15 @@ function createModal(modalId) {
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('${modalId}')">&times;</span>
             
-            <div class="modal-header">
-                <h3 class="modal-title">${data.title}</h3>
-            </div>
-            
             <div class="modal-gallery">
                 <div class="modal-slider" id="slider-${modalId}">
                     ${data.images.map((img, index) => `
                         <div class="modal-slide ${index === 0 ? 'active' : ''}">
-                            <img src="${img}" alt="${data.title} - Фото ${index + 1}" 
+                            <img src="${img}" alt="Изображение проекта" 
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                                  onload="this.nextElementSibling.style.display='none';">
                             <div class="modal-image-placeholder" style="display: none;">
                                 <span>📸</span>
-                                <p>Фото ${index + 1}</p>
                             </div>
                         </div>
                     `).join('')}
@@ -151,15 +120,6 @@ function createModal(modalId) {
                         <div class="modal-indicator ${index === 0 ? 'active' : ''}" 
                              onclick="goToSlide(${index})"></div>
                     `).join('')}
-                </div>
-            </div>
-            
-            <div class="modal-info">
-                <p class="modal-description">${data.description}</p>
-                <div class="modal-details">
-                    ${data.details.area ? `<div><strong>Площадь:</strong> ${data.details.area}</div>` : ''}
-                    ${data.details.duration ? `<div><strong>Срок реализации:</strong> ${data.details.duration}</div>` : ''}
-                    ${data.details.features ? `<div><strong>Особенности:</strong> ${data.details.features}</div>` : ''}
                 </div>
             </div>
         </div>
@@ -528,14 +488,6 @@ modalStyles.textContent = `
             width: 10px;
             height: 10px;
         }
-        
-        .modal-info {
-            padding: 2rem 1rem 1rem;
-        }
-        
-        .modal-description {
-            font-size: 1rem;
-        }
     }
     
     @media (max-width: 480px) {
@@ -585,37 +537,3 @@ function preloadImages() {
 
 // Запускаем предзагрузку при загрузке страницы
 document.addEventListener('DOMContentLoaded', preloadImages);
-
-// Автоматическое воспроизведение слайдов (опционально)
-let autoplayInterval;
-
-function startAutoplay() {
-    if (!isModalOpen) return;
-    
-    autoplayInterval = setInterval(() => {
-        changeSlide(1);
-    }, 5000);
-}
-
-function stopAutoplay() {
-    if (autoplayInterval) {
-        clearInterval(autoplayInterval);
-        autoplayInterval = null;
-    }
-}
-
-// Запуск автопроигрывания при открытии модального окна (по желанию)
-// Раскомментируйте следующие строки, если хотите автопроигрывание
-/*
-document.addEventListener('click', function(e) {
-    if (e.target.closest('.portfolio-item')) {
-        setTimeout(startAutoplay, 1000);
-    }
-});
-
-document.addEventListener('keydown', function(e) {
-    if (isModalOpen && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
-        stopAutoplay();
-    }
-});
-*/
