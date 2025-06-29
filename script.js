@@ -62,10 +62,33 @@ const modalData = {
     },
     modal4: {
         images: [
-            "images/placeholder1.jpg",
-            "images/placeholder2.jpg",
-            "images/placeholder3.jpg",
-            "images/placeholder4.jpg"
+            "images/s1.jpg",
+            "images/s2.jpg",
+            "images/s3.jpg",
+            "images/s4.jpg",
+            "images/s5.jpg",
+            "images/s6.jpg",
+            "images/s7.jpg",
+            "images/s8.jpg",
+            "images/s9.jpg",
+            "images/s10.jpg",
+            "images/s11.jpg",
+            "images/s12.jpg",
+            "images/s13.jpg",
+            "images/s14.jpg",
+            "images/s15.jpg",
+            "images/s16.jpg",
+            "images/s17.jpg",
+            "images/s18.jpg",
+            "images/s19.jpg",
+            "images/s20.jpg",
+            "images/s21.jpg",
+            "images/s22.jpg",
+            "images/s23.jpg",
+            "images/s24.jpg",
+            "images/s25.jpg",
+            "images/s26.jpg",
+            "images/s27.jpg"
         ]
     },
     modal5: {
